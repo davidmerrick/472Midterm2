@@ -1,0 +1,200 @@
+
+\documentclass[letterpaper,10pt,titlepage]{article}
+
+\usepackage{graphicx}                                        
+\usepackage{amssymb}                                         
+\usepackage{amsmath}                                         
+\usepackage{amsthm}                                          
+
+\usepackage{alltt}                                           
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{textheight=9in, textwidth=6.5in}
+
+%random comment
+
+\newcommand{\cred}[1]{{\color{red}#1}}
+\newcommand{\cblue}[1]{{\color{blue}#1}}
+
+\usepackage{hyperref}
+\usepackage{geometry}
+
+\def\name{Heather Warman and David Merrick}
+
+%% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = true,
+  urlcolor = black,
+  pdfauthor = {\name},
+  pdfkeywords = {cs472 ``computer architecture'' clements  "chapter 6''},
+  pdftitle = {CS 472: Homework 6},
+  pdfsubject = {CS 472: Homework 6},
+  pdfpagemode = UseNone
+}
+
+\begin{document}
+\hfill \name
+
+\hfill \today
+
+\hfill CS 472 HW 6
+
+\begin{enumerate}
+\item[$(6.1)$] What is performance in the context of computer systems and why is it so difficult to define?
+
+- Few people seem to agree on how to measure performance or how to interpret the results of testing it. The dictionary definition of performance is how successful something is at a certain task. In the context of computers, this usually refers to how fast the computer can perform a task. This, however, can be nebulous. The book gave an example of a desktop computer that can very quickly execute any program run on it. It compared this to an iPad with a much less powerful processor, but that could boot up faster, and noted that when using a simple calendar application the iPad usurped the raw processing power of the desktop by it’s speedier boot time. In short, performance is nebulous and really depends on the application of the computer. In some cases, like the iPad calendar example, a slower computer in terms of raw processing power may be able to outperform one with much greater processing power if performance is defined as the speed of doing something for the end user.
+
+
+\item[$(6.2)$] A system consists of a CPU, cache memory, main store, and hard disk drive. Where are time and effort best spent improving the system’s performance? What factors affect your answer?
+
+- It depends on the application. If the user needs raw processing power, obviously the improvements should be made to the CPU. If the user needs a faster boot time, then the hard disk drive should be improved to read data more quickly. The factors that affect the answer to that question are cost of improvements and what the application is for the computer. 
+
+
+\item[$(6.4)$] A data transmission system transmits data in the form of a master frame containing 16 sub-frames. Each sub-frame includes a 1024-bit data word and a 12-bit error-correcting code. The master frame itself contains a 32-bit error correcting code. What is the efficiency of this system?
+
+Efficiency = (total time spent executing useful work)/(total time) = (optimal time)/(total time)
+
+Master frame:
+
+16 subframes, 32-bit error correcting code
+
+Subframe:
+
+1024-bit word, 12-bit error correcting code
+
+Total bits: 1024 * 16 + 32 = 16,416
+
+Bits for error correcting code = 12* 16 + 32 = 224
+
+Efficiency = bits for useful work/total bits =(16,416- 224)/16,416=.986
+
+
+\item[$(6.6)$] Why is clock rate a poor metric of computer performance? What are the relative strengths and weaknesses of clock speed as a performance metric?
+
+- Clock rate is a poor metric for performance because it is only applicable in certain situations and largely meaningless otherwise. It can, for example, be useful in comparing two models of CPUs from the same generation, such as the Intel i7-980 vs the 970. But it really only measures the oscillation speed, which isn’t necessarily the speed at which the processor executes instructions or performs operations. For this reason, it doesn’t mean very much when comparing different CPUs.
+
+
+\item[$(6.7)$]The timing diagram in Figure P6.7 illustrates a system in which operations occur as three consecutive clock cycles. Actions taking place in clock cycle 1 are scalable; that is, if the clock cycle time changes, the actions can be speeded up or slowed down correspondingly. In cycle 2, the action process 1 requires 25 ns and in clock cycle 3 the action process 2 requires 32 ns. If the clock cycle is less than the time required for process 1 or process 2, then one or more wait cycles have to be inserted for the process to complete. What is the time to complete an operation if the clock cycle time is:
+
+a. 50ns : answer = 150ns
+
+b. 40ns : answer = 120ns
+
+c. 30ns : answer = 120ns
+
+d. 20ns : answer = 100ns
+
+e. 10ns : answer = 80ns
+
+
+\item[$(6.9)$] Can you think of a better metric than MIPS or clock speeds that gives a good impression of the power of a processor (without having to use benchmarks).
+
+According to the book, there are certain attributes that a good metric should have. A good metric should be repeatable (always yielding the same result under different conditions), easy to measure, universal across CPU architectures, general, and independent of commercial influences. A benchmark is the time required to execute a task or the rate at which tasks are executed. MIPS and clock speed are unreliable benchmarks. Clock rate is a poor indicator of performance because there is no simple relationship between clock rate and system performance across different platforms. MIPS is a poor indicator of performance because it only shows how fast a computer executes instructions, not the meaningful work done by those instructions. If using benchmarks, MFLOPS is more reliable than clock speed or MIPS because it indicates the actual work done rather than instruction throughput. The better indicator of performance is using fine-grained benchmarks; testing specific fragments of code across different platforms. The benchmark should match the workload being evaluated.
+
+
+\item[$(6.11)$] Overclocking a computer means operating it at a higher clock rate than that specified by its manufacturer; for example, a 2 GHz chip might be clocked at 2.1 GHz to squeeze more performance out of it. Does overclocking disprove the famous aphorism “There’s no such thing as a free lunch,” or is there a hidden cost? If so, what is the cost of overclocking?
+
+- There are definitely costs to overclocking a system. One of the main costs is that the lifespan of the hardware can be considerably reduced by the increased voltage necessary to overclock, and the large amount of heat that is produced. So you may gain more performance but risk the stability of the system.
+
+
+\item[$(6.12)$] If the clock rate could be reduced by 15\%, it would require only 2 cycles to perform a register load. Would that be a good idea?
+
+- It might be a good idea if the frequency for register load operations were higher. Since it is only at 20\%, they don’t occur as often as the all branch instructions or the arithmetic/logical instructions. If we lower the clock rate to improve one thing, it might have a negative effect on another thing, and since arithmetic/logical instructions have a higher frequency and only take 1 cycle, it might be a bad idea to lower the clock rate and potentially increase the needed cycles for that to 2 cycles, which would make the performance much worse since those happen much more often.
+
+
+\item[$(6.13)$] If the average performance of the computer (in terms of its CPI) is to be increased by 20\% while executing the same instruction mix, what target must be achieved for the cycles per conditional branch instruction?
+
+\begin{center}
+\includegraphics[height=250px]{613}
+\end{center}
+
+
+\item[$(6.14)$] A program is run on a computer with the following parameters.
+
+Clock cycle time 10 ns
+
+Instructions with 1 cycle 70\%
+
+Instructions with 2 cycles 20\%
+
+Instructions with 3 cycles 10\% 
+
+What is the MIPS rating of this computer?
+
+\begin{center}
+\includegraphics[height=250px]{614}
+\end{center}
+
+
+\item[$(6.16)$] In a particular system, a CPU is used for 78\% of the time and a disk drive for 22\% of the time. A designer has two options: 
+
+a. Improve the disc performance by 40\% and the CPU performance by 20\%
+
+b. Improve the disc performance by 10\% and the CPU performance by 80\%
+
+\begin{center}
+\includegraphics[height=250px]{616}
+\end{center}
+
+
+\item[$(6.17)$] For the following systems that have both serial and parallel activities, calculate the speedup ratio. 
+
+a. 10 processors fs=0.1
+
+b. 100 processors fs=0.1
+
+c. 5 processors fs=0.4
+
+d. 100 processors fs=0.01
+
+\begin{center}
+\includegraphics[height=250px]{617}
+\end{center}
+
+
+\item[$(6.18)$] A system has a single core processor that costs $150. Suppose that adding more cores to the chip costs $10 per additional processor. (Note: For this system, the value of fs=0.1.If it is considered worthwhile adding cores until the incremental speedup ratio increases by less than 5\% over the original (unmodified) performance, what is the optimum number of processors? What percentage increase in cost is required to achieve this performance?
+
+\begin{center}
+\includegraphics[height=250px]{618}
+\end{center}
+
+
+\item[$(6.22)$] A coprocessor is added to a computer to speed the execution time of string-processing instructions by a factor of 3.5. What fraction of the execution time must use these string-processing instructions in order to achieve an average speedup of 1.5?
+
+\begin{center}
+\includegraphics[height=250px]{622}
+\end{center}
+
+
+\item[$(6.25)$] A computer spends 25\% of its time accessing a hard disk. It spends 20\% of the time doing floating point. The hard disk is replaced by two disks operating in parallel and the floating point unit is replaced by one four times faster. ...
+
+- No, this answer is not necessarily correct. It is wrong to assume that just because you have two disks operating in parallel, that the speed will be twice as fast. This doesn’t account for operations that may not be able to be parallelized or perhaps are throttled at a certain speed.h
+
+
+\item[$(6.26)$] Someone decided to use the following C code as part of a benchmark to determine the performance of a computer including its memory. It has two potential faults. What are they?
+
+The first is that the x variable is never used. A smarter processor could have branch logic to realize this and just skip over that entire loop. This would make the code execute faster, but would not be an accurate indicator of the power of the CPU or the memory. 
+
+
+\item[$(6.31)$] For two benchmarks, x and y, show that their arithmetic mean is always higher than, or the same as, the geometric mean.
+
+\begin{center}
+\includegraphics[height=250px]{631}
+\end{center}
+
+\end{enumerate}
+
+
+
+
+\end{document}
+   D. Kevin McGrath 
+   Last modified: Mon Mar 31 09:26:37 2014

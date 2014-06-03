@@ -1,0 +1,246 @@
+
+\documentclass[letterpaper,10pt,titlepage]{article}
+
+\usepackage{graphicx}                                        
+\usepackage{amssymb}                                         
+\usepackage{amsmath}                                         
+\usepackage{amsthm}                                          
+
+\usepackage{alltt}                                           
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{textheight=9in, textwidth=6.5in}
+
+%random comment
+
+\newcommand{\cred}[1]{{\color{red}#1}}
+\newcommand{\cblue}[1]{{\color{blue}#1}}
+
+\usepackage{hyperref}
+\usepackage{geometry}
+
+\def\name{Heather Warman}
+
+%% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = true,
+  urlcolor = black,
+  pdfauthor = {\name},
+  pdfkeywords = {cs472 ``computer architecture'''},
+  pdftitle = {CS 472: Midterm 2},
+  pdfsubject = {CS 472: Midterm 2},
+  pdfpagemode = UseNone
+}
+
+\begin{document}
+\hfill \name
+
+\hfill \today
+
+\hfill CS 472 Midterm 2
+
+\begin{enumerate}
+\item[$(6.7)$] The timing diagram in Figure P6.7 illustrates a system in which operations occur as three consecutive clock cycles. Actions taking place in clock cycle 1 are scalable; that is, if the clock cycle time changes, the actions can be speeded up or slowed down correspondingly. In cycle 2, the action process 1 requires 25 ns and in clock cycle 3 the action process 2 requires 32 ns. If the clock cycle is less than the time required for process 1 or process 2, then one or more wait cycles have to be inserted for the process to complete. What is the time to complete an operation if the clock cycle time is:
+
+	a. 50ns : answer = 150ns, (cycle 1: 50ns + cycle 2: 50ns + cycle 3: 50ns)
+
+	b. 40ns : answer = 120ns, (cycle 1: 40ns + cycle 2: 40ns + cycle 3: 40ns)
+
+	c. 30ns : answer = 120ns, (cycle 1: 30ns + cycle 2: 30ns + cycle 3: 30ns + 30ns (must be split into 2 cycles for process 2))
+
+	d. 20ns : answer = 100 ns, (cycle 1: 20ns + cycle 2: 20ns + 20ns (must be split into 2 cycles for process 1) + (cycle 3: 20ns + 20ns (must be split into 2 cycles for process 2))
+
+	e. 10ns : answer = 90ns, (cycle 1: 10ns + cycle 2: 10ns + 10ns + 10ns(must be split into 3 cycles for process 1) + (cycle 3: 10ns + 10ns + 10ns + 10ns (must be split into 4 cycles for process 2))
+
+(Taken from CS472 Homework 6, by Heather Warman and David Merrick)
+
+
+\item[$(6.13)$] What is the meaning of the following terms?
+
+a. Temporal locality 
+
+The memory address is accessed repeatedly within a short time span. One example of this is in a loop.
+
+b. Spatial locality 
+
+The memory address is clustered within the same region of memory. One example of this is a data structure. 
+
+(Taken from CS472 Homework 6, by Heather Warman and David Merrick)
+
+
+\item[$(6.13)$] From first principles, derive an expression for the speedup ratio of a memory system with cache (assume the hit ratio is h and the ratio of the main storage access time to cache access time is k, where k < 1). Assume that the system is an ideal system and that you don’t have to worry about the effect of clock cycle times. 
+
+1/(h*k + (1-h)) = 1/(1-h(1-k))
+
+
+\item[$(9.5)$] For the following ideal systems, calculate the speedup ratio S. In each case, t\_c is the access time of
+the cache memory, t\_m is the access time of the main store, and h is the hit ratio. 
+
+The speedup ratio is the ratio of the memory system’s access time without cache to its access time with cache.
+
+\begin{center}
+\includegraphics[height=330px]{problem}
+\includegraphics[height=330px]{problem1}
+\end{center}
+
+
+\item[$(9.6)$] For the following ideal systems, calculate the hit ratio h required to achieve the stated speedup ratio S.
+
+\begin{center}
+\includegraphics[height=330px]{problem2}
+\end{center}
+
+
+\item[$(9.8)$] For the following systems that use a clocked microprocessor, calculate the maximum speedup ratio you could expect to see as h approaches 100\%.
+
+\begin{center}
+\includegraphics[height=330px]{problem3}
+\end{center}
+
+
+\item[$(9.11)$] In a direct-mapped cache memory system, what is the meaning of the following terms?
+
+a. Word 
+
+The word is the smallest unit of data in the cache. (There is a distinction to be made here between the smallest unit to be readable from the cache; if the processor only needed to read part of a word, it could read a word and ignore the unnecessary bits). A word in a direct-mapped cache is accessed by its set address and then its line address. 
+
+b. Line
+
+A cache line is a sequence of several consecutive words. The line address selects the same line in each of the sets. 
+
+c. Set
+In a direct-mapped cache system, the lines are arranged into units called sets. The size of a set is the same size as the cache. 
+
+
+\item[$(9.12)$] How is data in main store mapped on to each of the following? 
+
+(Taken from CS472 Homework 5, by Heather Warman and David Merrick)
+
+a. A direct-mapped cache 
+
+There is a direct relationship between the line in the cache and the location of the corresponding line in memory. There is only one location for each line. Data is mapped as follows: Set, Line, Word.
+
+b. A fully associative cache 
+
+There are no restrictions on the locations of data, but it is necessary to choose which line to remove once the cache is full. Data is mapped as follows: Key, Index.
+
+c. A set-associative cache
+
+This type of cache combines the features of both fully associative and direct-mapped caches. It utilizes several direct-mapped caches in parallel. In an n-way set-associative cache, there are n possible cache locations that any given line can be loaded into.
+Data is mapped as follows: Set, Line, Word.
+
+
+\item[$(9.17)$] What is cache coherency?
+
+If the data in the cache is modified but is not changed in main memory (or vice-versa), the unchanged data is stale. This means inconsistency in the data. Cache coherency means that the data in the cache is consistent with the corresponding data in main memory.
+
+
+\item[$(9.22)$] Why is it harder to design a data cache than an instruction cache?
+
+It is more difficult to design a data cache than an instruction cache for a couple of reasons. First, an entry in an instruction cache is never modified, except when the line is initially moved into the cache. Second, the program does not change during the course of its execution, so instructions are never swapped out of the cache. In short, since the contents of the instruction cache are never changed it is much easier to design an instruction cache than a data cache. 
+
+
+\item[$(9.23)$] When a CPU writes to the cache, both the item in the cache and the corresponding item in the memory must be updated. If data is not in the cache, it must be fetched from memory and loaded in the cache. If t_1 is the time taken to reload the cache on a miss, show that the effective average access time of the memory system is given by t\_ave=ht\_c+(1-h) t\_m+(1-h) t\_1.
+
+(Taken from CS472 Homework 5, by Heather Warman and David Merrick)
+
+h is the hit ratio.
+
+t\_c is the access time of the cache memory.
+
+t\_1 is the time taken to reload the cache on a miss.
+
+t\_m is the access time of the main store.
+
+(1 - h) is the miss ratio.
+
+So it makes sense that the average access time would be the probability of hitting the cache memory, plus the probability of hitting the main store, plus the probability of reloading the cache on a miss.
+
+
+\item[$(9.26)$] A system has a level 1 cache and a level 2 cache. The hit rate of the level 1 cache is 90\%, and the hit rate of
+the level 2 cache is 80\%. An access to level 1 cache requires one cycle, an access to level 2 cache requires four cycles, and an access to main memory requires 50 cycles. What is the average access time? 
+
+(Taken from CS472 Homework 5, by Heather Warman and David Merrick)
+
+Miss rate of L1 cache = .1. 
+Miss rate of L2 cache = .2. 
+
+access time\_avg=1 cycle+.1(4 cycles+.2(50 cycles))= 2.4 cycles
+
+
+\item[$(9.28)$] In the context of multilevel caches, what is the difference between a local miss rate and a global miss rate?
+
+A multilevel cache is arranged so that the lowest level cache successively moves up the ladder following a cache miss (L1 -> L2 -> L3, et al. until missing data is located). A local miss rate refers to the number of misses at a given cache level divided by the total number of memory accesses at that cache level, while a global miss rate refers to the rate of misses at all cache levels divided by the total number of cache accesses.
+
+\item[$(9.35)$] A 64-bit processor has an 8-MB, four-way set associative cache with 32-byte lines. How is the address arranged in terms of set, line, and offset bits? 
+
+(Taken from CS472 Homework 5, by Heather Warman and David Merrick)
+
+The line is 16 bits, the offset is 5 bits (because each line is 2^5 = 32 bytes), and the set is 43 bits.
+
+\item[$(9.41)$] What are the fundamental differences between cache memory (as found in a CPU) and cache memory found in a hard disk drive? 
+
+The main difference between cache memory in a CPU and cache memory in a hard disk drive is the type of memory used. The memory in a CPU needs to perform quickly, so it is much faster than the memory found in a hard disk drive, where performance is not as critical.
+
+
+\item[$(9.42)$] What are the differences between write-back and write-through caches, and what are the implications for system performance? 
+
+In a cache system with a write-back policy, a write operation to the main memory takes place only when a line in the cache is to be ejected. So main memory is not updated on each write to the cache. The line is written back to memory only when it’s flushed out of the cache by a read miss.
+In a cache system with a write-through policy, the main memory is updated at the same time as the cache is loaded.
+A write-back policy results in higher speed, but lower cache coherency. A write through policy results in lower speed, but greater cache coherency.
+
+
+\item[$(9.43)$] A computer with a 32-bit address architecture has a memory management system with single-level 4 KB page tables. How much memory space must be devoted to the page tables?
+
+Page offset: Since there are 4KB in a page, offset field must contain 12 bits (2^12 = 4096).
+
+Physical page number size = total bits allocated for physical address - page offset = 32 - 12 = 20.
+
+Number of page entries = bits for virtual page number - page offset = 32 - 12 = 20. So we need 2^20 * 20 bits for the page table size. Which is about 2.5 MB.
+
+\item[$(9.45)$]
+ 
+Average number of cycles per instruction = .7 * 1 cycle + .15 * 2 cycles + .1 * 2 cycles +.05 * (2 cycles + 5 cycles for write-through) + (1 - .95) * 10 for cache miss = 2.05 cycles.
+
+
+\item[$(9.46)$]
+
+Each array access: 2 cycles + 6 cycles + 50 cycles = 58 cycles.
+
+Setting the variable x and reading y: 2 cycles + 2 cycles = 4 cycles.
+
+Setting s and reading x and s: 2 cycles + 2 cycles + 2 cycles = 6 cycles.
+
+So each time around the loop is 58 cycles + 4 cycles + 6 cycles = 68 cycles.
+
+
+\item[$(9.57)$] A computer with a 24-bit address bus has a main memory of size 16 MB and a cache size of 64 KB. The word length is two bytes. 
+
+a.	What is the address format for a direct-mapped cache with a line size of 32 words?
+
+Sets: 16MB/64KB = 256 sets.
+
+Set: x bits. Line: x bits. Word: 16 bits.
+
+
+b. What is the address format for a fully associative cache with a line size of 32 words? 
+
+
+c. What is the address format for a four-way set-associative cache with a line size of 16 words? 
+
+\end{enumerate}
+
+
+
+
+\end{document}
+   D. Kevin McGrath 
+   Last modified: Mon Mar 31 09:26:37 2014
